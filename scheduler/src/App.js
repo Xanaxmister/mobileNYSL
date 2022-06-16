@@ -1,30 +1,74 @@
 import React from 'react';
 
+
+const terms = { F: 'Fall', W: 'Winter', S: 'Spring'};
+
+
+const Banner = ({ title }) => (
+  <h1>{title}</h1>
+);
+
+const CourseList = ({ courses }) => (
+  <div>
+    { Object.values(courses).map(course => <Course key={course.id} course={ course } />) }
+  </div>
+);
+
+
+const Course = ({ course }) => (
+  <div>
+    { getCourseTerm(course) } CS { getCourseNumber(course) } : { course.title } - TIME:  { getCourseMeetTime(course) }
+  </div>
+);
+
+
+const getCourseTerm = course => (
+  terms[course.id.charAt(0)]
+);
+
+const getCourseNumber = course => (
+  course.id.slice(1, 4)
+);
+
+const getCourseMeetTime = course => (
+  course.meets.slice(4)
+);
+
+
+
 const schedule = {
-  title: "Northside Youth Soccer League",
-  text: ""
+  "title": "CS Courses for 2018-2019",
+  "courses": {
+    "F101": {
+      "id": "F101",
+      "meets": "MWF 11:00-11:50",
+      "title": "Computer Science: Concepts, Philosophy, and Connections"
+    },
+    "F110": {
+      "id": "F110",
+      "meets": "MWF 10:00-10:50",
+      "title": "Intro Programming for non-majors"
+    },
+    "S313": {
+      "id": "S313",
+      "meets": "TuTh 15:30-16:50",
+      "title": "Tangible Interaction Design and Learning"
+    },
+    "S314": {
+      "id": "S314",
+      "meets": "TuTh 9:30-10:50",
+      "title": "Tech & Human Interaction"
+    }
+  }
 };
 
-const App = () =>  (
+
+
+const App = () => (
   <div>
-    <h1>{ schedule.title }</h1>
-    <br></br>
-    <h2>{"Upcoming Events"}</h2>
-    <br></br>
-    <div>Home About NYSL Contact Rules and Policies Game Information Registration Form</div>
-    <br></br>
-    <div>August 4</div>
-    <br></br>
-    <div>NYSL Fundraiser</div>
-    <br></br>
-    <div>August 16</div>
-    <br></br>
-    <div>Season Kick-off: Meet the Teams</div>
-    <br></br>
-    <div>September 1</div>
-    <br></br>
-    <div>First Game of the Season (Check Game Schedule for details)</div>
-</div>
+    <Banner title={schedule.title} />
+    <CourseList courses={schedule.courses} />
+  </div>
 );
 
 export default App;
